@@ -1,21 +1,29 @@
 const Task = require('../models/task')
 
 async function createTask(req, res) {
+    console.log(req.body.title)
+    console.log(req.body.description)
     const taskData = {
-        title: "title",
-        description: "description",
-    }
-    const task = new Task(taskData)
+        title: req.body.title,
+        description: req.body.description,
+    };
+
+    const task = new Task(taskData);
 
     try {
-        const savedTask = await task.save()
-        res.json({ msg: "Added successfully" })
-    }
-    catch (e) {
-        console.log(e)
-        res.json({ msg: "Could not add task" })
+        await task.save();
+
+        // Fetch all tasks to render them on the home page
+        const tasks = await Task.find(); // Get all tasks from the database
+
+        // Pass tasks to the template
+        return res.render('../views/home.ejs', { tasks });
+    } catch (e) {
+        console.log(e);
+        res.json({ msg: "Could not add task" });
     }
 }
+
 
 async function fetchTask(req, res) {
     try {
@@ -28,7 +36,7 @@ async function fetchTask(req, res) {
                 id: task_item._id
             })
         }
-        res.json({ tasks: tasks })
+       res.render('../views/home.ejs',{tasks})
     }
     catch (e) {
         res.json({ msg: "Could not fetch task" })
@@ -36,12 +44,23 @@ async function fetchTask(req, res) {
 }
 
 async function updateTask(req, res) {
+    const id = req.body['._id']; 
+    const { title, description } = req.body; 
+
+    console.log(req.body._id); 
+    console.log('ID:', id); 
+
     try {
-        const task = await Task.findByIdAndUpdate("67024e834e5caa442cd7aa7d", { description: "jahntu", title: "jhantu" }, { new: true })
-        res.json({ msg: "Task updated" })
-    }
-    catch (e) {
-        res.json({ msg: "Could not update task" })
+        const task = await Task.findByIdAndUpdate(id, { title, description }, { new: true });
+        if (!task) {
+            return res.status(404).json({ msg: "Task not found" });
+        }
+
+        const tasks = await Task.find(); // Fetch all tasks
+        return res.render('../views/home.ejs', { tasks });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ msg: "Could not update task" });
     }
 }
 

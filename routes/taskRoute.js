@@ -7,7 +7,7 @@ router.post('/create', taskMethods.createTask)
 
 router.get('/fetch', taskMethods.fetchTask)
 
-router.put('/update', taskMethods.updateTask)
+router.post('/update', taskMethods.updateTask)
 
-router.delete('/delete',taskMethods.deleteTask)
+router.delete('/delete/:taskId',taskMethods.deleteTask)
 module.exports = router
