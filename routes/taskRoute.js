@@ -1,20 +1,13 @@
 const express =require('express')
 const router = express.Router()
-const createTask = require('../controllers/taskController')
+const taskMethods = require('../controllers/taskController')
 
-router.post('/create', (req,res) => {
-createTask.createTask("title","description",res)
-})
+router.post('/create', taskMethods.createTask)
 
-router.get('/fetch', (req,res) => {
-    createTask.fetchTask(res)
-})
 
-router.put('/update', (req,res) => {
-    createTask.updateTask("title1","description1",res, "67024e814e5caa442cd7aa7b")
-})
+router.get('/fetch', taskMethods.fetchTask)
 
-router.delete('/delete',(req,res) => {
-    createTask.deleteTask(res,"67024e814e5caa442cd7aa7b")
-})
+router.put('/update', taskMethods.updateTask)
+
+router.delete('/delete',taskMethods.deleteTask)
 module.exports = router
