@@ -153,7 +153,6 @@
                     </div>
                     <div class="actions">
                         <button class="btn edit" onclick="editTask('<%= task._id %>', '<%= task.title %>', '<%= task.description %>')">Edit</button>
-                        <button class="btn delete" onclick="removeTask('<%= task.id %>')">Delete</button>
                     </div>
                 </li>
             <% }) %>
@@ -174,28 +173,6 @@
             document.getElementById('editForm').style.display = 'none';
             document.getElementById('taskForm').style.display = 'block';
         }
-        async function removeTask(taskId) {
-
-    try {
-        const response = await fetch(`/task/delete/${taskId}`, {
-            method: 'delete', // Ensure you use 'DELETE' correctly
-        });
-        console.log(response.status)
-
-        if (response.ok) {
-            const result = await response.json();
-            alert('Task deleted: ' + result.msg);
-
-            // Remove the task from the DOM
-            document.getElementById(`task-${taskId}`).remove();
-        } else {
-            const error = await response.json();
-            alert('Error: ' + error.msg);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while deleting the task.');
-    }
-}
+ 
 
         </script>
