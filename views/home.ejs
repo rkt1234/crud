@@ -129,7 +129,7 @@
             </div>
         </form>`
         <div id="editForm" style="display: none;">
-            <form id="editTaskForm" method="post" action="/task/update">
+            <form id="editTaskForm" method="post" action="/task/update?_method=PUT">
                 <div class="form-group">
                     <input type="hidden" id="taskId" name="._id" />
                     <input type="text" id="editTaskTitle" name="title" placeholder="Task Title" required>

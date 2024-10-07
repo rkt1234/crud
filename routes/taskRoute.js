@@ -7,7 +7,7 @@ router.post('/create', taskMethods.createTask)
 
 router.get('/fetch', taskMethods.fetchTask)
 
-router.post('/update', taskMethods.updateTask)
+router.put('/update', taskMethods.updateTask)
 
 
 module.exports = router
