@@ -9,5 +9,5 @@ router.get('/fetch', taskMethods.fetchTask)
 
 router.post('/update', taskMethods.updateTask)
 
-router.delete('/delete/:taskId',taskMethods.deleteTask)
+
 module.exports = router
